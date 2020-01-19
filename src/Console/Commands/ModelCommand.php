@@ -71,6 +71,12 @@ class ModelCommand extends AbstractCommand
         $this->writeFiles();
 
         $this->runMigration();
+
+        $output = [];
+        exec('composer dump-autoload', $output);
+        collect($output)->each(function (string $line) {
+            $this->info($line);
+        });
     }
 
     private function askForColumns(): void
@@ -196,7 +202,7 @@ class ModelCommand extends AbstractCommand
      */
     private function writeRepository(): void
     {
-        if ($this->option('all') || $this->option('repository')) {
+        if ($this->option('all') || $this->option('repository') || $this->confirm('Write repository?')) {
             $writer = new RepositoryWriter($this->model);
             $writer->setPath(Config::get('laravel-bakery.model.repository_path'));
 
@@ -209,7 +215,7 @@ class ModelCommand extends AbstractCommand
      */
     private function writeMigration(): void
     {
-        if ($this->option('all') || $this->option('migration')) {
+        if ($this->option('all') || $this->option('migration') || $this->confirm('Write migration?')) {
             $writer = new MigrationWriter($this->model);
             $writer->setPath(Config::get('laravel-bakery.model.migration_path'));
 
@@ -248,7 +254,7 @@ class ModelCommand extends AbstractCommand
      */
     private function writeSeeder(): void
     {
-        if ($this->option('all') || $this->option('seeder')) {
+        if ($this->option('all') || $this->option('seeder') || $this->confirm('Write seeder?')) {
             $writer = new SeederWriter($this->model);
             $writer->setPath(Config::get('laravel-bakery.model.seeder_path'));
 
@@ -261,7 +267,7 @@ class ModelCommand extends AbstractCommand
      */
     private function writeFactory(): void
     {
-        if ($this->option('all') || $this->option('factory')) {
+        if ($this->option('all') || $this->option('factory') || $this->confirm('Write factory?')) {
             $writer = new FactoryWriter($this->model);
             $writer->setPath(Config::get('laravel-bakery.model.factory_path'));
 
