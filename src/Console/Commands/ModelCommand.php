@@ -71,12 +71,6 @@ class ModelCommand extends AbstractCommand
         $this->writeFiles();
 
         $this->runMigration();
-
-        $output = [];
-        exec('composer dump-autoload', $output);
-        collect($output)->each(function (string $line) {
-            $this->info($line);
-        });
     }
 
     private function askForColumns(): void
@@ -99,6 +93,16 @@ class ModelCommand extends AbstractCommand
             $this->clearScreen();
         }
     }
+
+    private function dumpAutoload(): void
+    {
+        $output = [];
+        exec('composer dump-autoload', $output);
+        collect($output)->each(function (string $line) {
+            $this->info($line);
+        });
+    }
+
 
     private function writeFiles(): void
     {
@@ -259,6 +263,8 @@ class ModelCommand extends AbstractCommand
             $writer->setPath(Config::get('laravel-bakery.model.seeder_path'));
 
             $this->info($writer->write(sprintf('%sTableSeeder.php', Str::plural($this->model->getName()))));
+
+            $this->dumpAutoload();
         }
     }
 
