@@ -8,10 +8,11 @@ class {{ $class }}TableSeeder extends {{ $extends }}
      *
      * {{ '@' }}return void
      */
-    public function run()
+    public function run(): void
     {
         {{ $model }}::create([
             {!! $properties !!}
         ]);
     }
+    {{ $csvSeederStub ?? null }}
 }

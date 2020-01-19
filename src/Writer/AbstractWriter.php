@@ -2,6 +2,7 @@
 
 namespace Simlux\LaravelBakery\Writer;
 
+use File;
 use Str;
 
 /**
@@ -95,9 +96,12 @@ abstract class AbstractWriter
         }
         $prefix .= PHP_EOL . PHP_EOL;
 
-        $file = $this->path . $file;
+        $file    = $this->path . $file;
+        $written = File::put($file, $prefix . $view->render());
 
-        if (\File::put($file, $prefix . $view->render())) {
+        $this->afterWrite();
+
+        if ($written) {
             return $file;
         }
 
@@ -109,7 +113,13 @@ abstract class AbstractWriter
      */
     protected function beforeWrite(): void
     {
+    }
 
+    /**
+     * @return void
+     */
+    protected function afterWrite(): void
+    {
     }
 
     /**
@@ -208,7 +218,7 @@ abstract class AbstractWriter
     }
 
     /**
-     * @param string $class
+     * @param string      $class
      * @param string|null $namespace
      *
      * @return bool
