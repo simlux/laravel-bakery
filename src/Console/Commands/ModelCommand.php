@@ -119,7 +119,7 @@ class ModelCommand extends AbstractCommand
     }
 
     /**
-     * @param bool  $first
+     * @param bool $first
      *
      * @return bool
      */
@@ -259,9 +259,13 @@ class ModelCommand extends AbstractCommand
     private function writeSeeder(): void
     {
         if ($this->option('all') || $this->option('seeder') || $this->confirm('Write seeder?')) {
-            $writer = new SeederWriter($this->model);
-            $writer->setPath(Config::get('laravel-bakery.model.seeder_path'));
 
+            $isCSVSeeder = $this->confirm('CSV Seeder?');
+            $writer      = new SeederWriter($this->model);
+            $writer->setPath(Config::get('laravel-bakery.model.seeder_path'));
+            if ($isCSVSeeder) {
+                $writer->setCSVSeeder();
+            }
             $this->info($writer->write(sprintf('%sTableSeeder.php', Str::plural($this->model->getName()))));
 
             $this->dumpAutoload();
