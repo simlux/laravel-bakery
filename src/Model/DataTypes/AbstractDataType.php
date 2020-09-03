@@ -119,7 +119,15 @@ abstract class AbstractDataType
      *
      * @return string
      */
-    abstract public function getMethodParams(string $name): string;
+    public function getMethodParams(string $name): string
+    {
+        $params = [
+            sprintf('self::PROPERTY_%s', strtoupper($name)),
+            $this->length
+        ];
+
+        return implode(', ', $params);
+    }
 
     /**
      * @param int    $i

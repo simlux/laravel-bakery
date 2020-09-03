@@ -61,16 +61,6 @@ class BooleanDataType extends AbstractDataType
     }
 
     /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getMethodParams(string $name): string
-    {
-        return $this->paramToString($name);
-    }
-
-    /**
      * @param int    $i
      * @param string $name
      *

@@ -104,7 +104,7 @@ class FloatDataType extends AbstractDataType
     public function getMethodParams(string $name): string
     {
         $params = [
-            $this->paramToString($name),
+            sprintf('self::PROPERTY_%s', strtoupper($name)),
             $this->getTotal(),
             $this->precision
         ];

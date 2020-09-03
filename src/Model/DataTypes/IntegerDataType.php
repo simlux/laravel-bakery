@@ -121,7 +121,7 @@ class IntegerDataType extends AbstractDataType
      */
     public function getMethodParams(string $name): string
     {
-        $params = [$this->paramToString($name)];
+        $params = [sprintf('self::PROPERTY_%s', strtoupper($name))];
 
         if ($this->autoIncrement) {
             $params[] = $this->paramToString(true);

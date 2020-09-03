@@ -84,21 +84,6 @@ class StringDataType extends AbstractDataType
     }
 
     /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getMethodParams(string $name): string
-    {
-        $params = [
-            $this->paramToString($name),
-            $this->length
-        ];
-
-        return implode(', ', $params);
-    }
-
-    /**
      * @param int    $i
      * @param string $name
      *
