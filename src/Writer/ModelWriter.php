@@ -42,5 +42,30 @@ class ModelWriter extends AbstractWriter
         }
 
         $this->setVar('model', $this->model);
+        $this->setVar('constants', $this->constantsAsString());
+    }
+
+    /**
+     * @return string
+     */
+    private function constantsAsString(): string
+    {
+        $constants = [$this->constantAsString('TABLE', $this->model->getTable())];
+        foreach ($this->model->getProperties() as $property) {
+            $constants[] = $this->constantAsString('PROPERTY_' . $property->name, $property->name);
+        }
+
+        return implode(PHP_EOL . "\t", $constants);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return string
+     */
+    private function constantAsString(string $name, $value): string
+    {
+        return sprintf("const %s = '%s';", strtoupper($name), $value);
     }
 }

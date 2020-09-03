@@ -10,10 +10,12 @@ namespace {{ $model->getNamespace() }};
  */
 class {{ $model->getName() }} extends {{ $model->getExtends(false) }}
 {
+    {!! $constants !!}
+
     /**
      * {{ '@' }}var string
      */
-    protected $table = '{{ $model->getTable() }}';
+    protected $table = self::TABLE;
 
     /**
      * {{ '@' }}var bool
