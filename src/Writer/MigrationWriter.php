@@ -67,7 +67,7 @@ class MigrationWriter extends AbstractWriter
     {
         $this->setVar('columns', collect($this->model->getProperties())
             ->map(function (ModelProperty $property) {
-                return $property->getMigrationString();
+                return $property->getMigrationString($this->model);
             })
             ->implode(self::EOL . str_repeat(self::TAB, 3)));
     }

@@ -115,13 +115,14 @@ class IntegerDataType extends AbstractDataType
     }
 
     /**
-     * @param string $name
+     * @param \Simlux\LaravelBakery\Model\Model $model
+     * @param string                            $name
      *
      * @return string
      */
-    public function getMethodParams(string $name): string
+    public function getMethodParams(\Simlux\LaravelBakery\Model\Model $model, string $name): string
     {
-        $params = [sprintf('self::PROPERTY_%s', strtoupper($name))];
+        $params = [sprintf('%s::PROPERTY_%s', $model->getName(), strtoupper($name))];
 
         if ($this->autoIncrement) {
             $params[] = $this->paramToString(true);

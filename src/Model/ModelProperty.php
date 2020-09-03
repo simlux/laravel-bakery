@@ -52,14 +52,16 @@ class ModelProperty
     }
 
     /**
+     * @param Model $model
+     *
      * @return string
      */
-    public function getMigrationString(): string
+    public function getMigrationString(\Simlux\LaravelBakery\Model\Model $model): string
     {
         $string = sprintf(
             "\$table->%s(%s)%s",
             $this->dataType->getMethodName(),
-            $this->dataType->getMethodParams($this->name),
+            $this->dataType->getMethodParams($model, $this->name),
             ''
         );
 

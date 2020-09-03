@@ -101,10 +101,10 @@ class FloatDataType extends AbstractDataType
      *
      * @return string
      */
-    public function getMethodParams(string $name): string
+    public function getMethodParams(\Simlux\LaravelBakery\Model\Model $model, string $name): string
     {
         $params = [
-            sprintf('self::PROPERTY_%s', strtoupper($name)),
+            sprintf('%s::PROPERTY_%s', $model->getName(), strtoupper($name)),
             $this->getTotal(),
             $this->precision
         ];
