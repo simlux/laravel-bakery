@@ -56,6 +56,7 @@ class MigrationWriter extends AbstractWriter
         $this->setVar('table', $this->model->getTable());
         $this->setVar('class', Str::plural($this->model->getName()));
         $this->useClass(MigrationHelper::class);
+        $this->useClass($this->model->getClassName(true));
 
         if ($this->parentClass) {
             $this->useClass($this->parentClass);
